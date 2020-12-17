@@ -9,7 +9,7 @@ class AppDrawer extends StatelessWidget {
         children: [
           AppBar(
             title: Text('Links'),
-            automaticallyImplyLeading: false,
+            automaticallyImplyLeading: false, // whici will never add a Back button
           ),
           Divider(),
           ListTile(
