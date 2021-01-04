@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cart/widgets/battery_life.dart';
 import '../screens/user_products_screen.dart';
 import '../screens/order_screen.dart';
 
@@ -36,6 +37,9 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed(UserProductsScreen.routeName);
             },
           ),
+          Expanded(child: Container()),
+          Divider(),
+          BatterLife(),
         ],
       ),
     );
