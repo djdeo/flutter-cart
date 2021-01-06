@@ -16,7 +16,8 @@ class _BatterLifeState extends State<BatterLife> {
       setState(() {
         _batteryLevel = batteryLevel;
       });
-    } on PlatformException catch (e) {
+    } on PlatformException catch (error) {
+      print(error);
       setState(() {
         _batteryLevel = null;
       });

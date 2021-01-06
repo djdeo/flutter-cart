@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../widgets/badge.dart';
 import '../widgets/products_grid.dart';
 import '../providers/cart.dart';
+import '../providers/products.dart';
 import '../widgets/app_drawer.dart';
 
 enum FilterOptions { Favorites, All }
@@ -16,6 +17,12 @@ class ProductsOverviewScreen extends StatefulWidget {
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   bool _showOnlyFavorites = false;
+
+  @override
+  void initState() {
+    Provider.of<Products>(context, listen: false).getProducts();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
