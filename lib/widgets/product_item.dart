@@ -18,6 +18,16 @@ class ProductItem extends StatelessWidget {
     final product = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
 
+    _showSnacbar(String msg) {
+      Scaffold.of(context).hideCurrentSnackBar();
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          duration: Duration(seconds: 2),
+          content: Text(msg),
+        )
+      );
+    }
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -40,7 +50,9 @@ class ProductItem extends StatelessWidget {
                 color: Theme.of(context).accentColor,
                 onPressed: () {
                   product.toggleFavoriteStatus();
-                  Provider.of<Products>(context, listen: false).updateProduct(product.id, product);
+                  Provider.of<Products>(context, listen: false)
+                      .updateProduct(product.id, product);
+                  _showSnacbar(product.isFavorite?'Favorited this product ♥':'Un-favorited');
                 },
               ),
             ),
