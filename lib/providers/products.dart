@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import './product.dart';
 import 'package:dio/dio.dart';
@@ -33,7 +32,7 @@ class Products with ChangeNotifier {
             description: el['description'],
             price: el['price'],
             imageUrl: el['imageUrl'],
-            isFavorite: false));
+            isFavorite: el['isFavorite']));
       });
       _items = loadedProducts;
       notifyListeners();
@@ -74,6 +73,7 @@ class Products with ChangeNotifier {
         'price': newProduct.price,
         'imageUrl': newProduct.imageUrl,
         'id': DateTime.now().toString(),
+        'isFavorite':newProduct.isFavorite,
       });
       _items[prodIndex] = newProduct;
       notifyListeners();
