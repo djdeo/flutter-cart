@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cart/screens/auth_screen.dart';
 import 'package:flutter_cart/widgets/battery_life.dart';
 import '../screens/user_products_screen.dart';
 import '../screens/order_screen.dart';
@@ -40,6 +41,14 @@ class AppDrawer extends StatelessWidget {
           Expanded(child: Container()),
           Divider(),
           BatterLife(),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('Logout'),
+            onTap: () {
+              Navigator.of(context).pushNamed(AuthScreen.routeName);
+            },
+          ),
         ],
       ),
     );
