@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cart/widgets/auth_card.dart';
 
 class AuthScreen extends StatelessWidget {
   static const routeName = '/auth';
@@ -55,7 +56,7 @@ class AuthScreen extends StatelessWidget {
                   ),
                   Flexible(
                     flex: deviceSize.width > 600 ? 2:1,
-                    child: Text('replace me with login form'),
+                    child: AuthCard(),
                   )
                 ],
               ),
