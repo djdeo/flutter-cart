@@ -1,5 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/auth.dart';
 
 import '../screens/cart_screen.dart';
 
@@ -17,6 +21,8 @@ class _AuthCardState extends State<AuthCard> {
     'identifier': '',
     'password': '',
   };
+
+  bool _isLoading = false;
 
   final _passwordController = TextEditingController();
   String baseUrl = 'http://192.168.0.70:1337/auth/local';
@@ -48,22 +54,22 @@ class _AuthCardState extends State<AuthCard> {
     }
 
     _formKey.currentState.save();
-    print(_authData);
-
+    setState(() { _isLoading = true;});
     try {
       if(_authMode == AuthMode.Login) {
-        var res = await Dio().post(baseUrl, data: {
-          'identifier': _authData['email'],
-          'password': _authData['password'],
-        });
-        print(res);
+       await Provider.of<Auth>(context, listen:false).login(_authData['email'],_authData['password']);
+        // var res = await Dio().post(baseUrl, data: {
+        //   'identifier': _authData['email'],
+        //   'password': _authData['password'],
+        // });
         // strapi api data related
         Navigator.of(context).pushReplacementNamed(CartScreen.routeName);
       }
     } catch(error) {
       print(error);
-      _showErrorMessage(error.message);
+      _showErrorMessage('error response');
     }
+    setState(() { _isLoading = false;});
   }
 
   @override
@@ -127,18 +133,21 @@ class _AuthCardState extends State<AuthCard> {
                     SizedBox(
                       height: 10,
                     ),
-                    RaisedButton(
-                      child: Text(
-                          _authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-                      color: Theme.of(context).primaryColor,
-                      textColor:
-                          Theme.of(context).primaryTextTheme.button.color,
-                      onPressed: _submit,
-                    ),
+                    if(_isLoading)
+                      CircularProgressIndicator()
+                    else
+                      RaisedButton(
+                        child: Text(
+                            _authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                        color: Theme.of(context).primaryColor,
+                        textColor:
+                            Theme.of(context).primaryTextTheme.button.color,
+                        onPressed: _submit,
+                      ),
                     FlatButton(
                       child: Text(
                           '${_authMode == AuthMode.Login ? 'SIGN UP' : 'LOGIN'} Instead'),

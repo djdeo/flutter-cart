@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cart/screens/auth_screen.dart';
 import 'package:flutter_cart/widgets/battery_life.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/auth.dart';
+
 import '../screens/user_products_screen.dart';
 import '../screens/order_screen.dart';
 
@@ -10,9 +14,11 @@ class AppDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          AppBar(
-            title: Text('Links'),
-            automaticallyImplyLeading: false, // whici will never add a Back button
+          Consumer<Auth>(
+            builder: (ctx, auth, _) => AppBar(
+              title: Text(auth.userInfo['email']),
+              automaticallyImplyLeading:false, // whici will never add a Back button
+            ),
           ),
           Divider(),
           ListTile(
@@ -35,7 +41,8 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.edit),
             title: Text('Manage Products'),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(UserProductsScreen.routeName);
+              Navigator.of(context)
+                  .pushReplacementNamed(UserProductsScreen.routeName);
             },
           ),
           Expanded(child: Container()),
