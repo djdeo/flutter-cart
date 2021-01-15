@@ -26,6 +26,8 @@ dependencies:
   provider: ^4.0.0
   intl: ^0.16.1
   dio: ^3.0.10
+  sp_util: ^1.0.1
+
 
 
   # The following adds the Cupertino Icons font to your application.
